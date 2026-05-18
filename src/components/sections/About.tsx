@@ -143,7 +143,7 @@ export default function About() {
                 <div className="flex items-center gap-4">
                   {/* Optional: Add a direct download link here if they still want to save it */}
                   <a
-                    href="/Diasanta - Resume.pdf"
+                    href="/Gerald_Diasanta_Resume.pdf"
                     download
                     className="text-xs font-semibold text-[var(--accent)] hover:underline"
                   >
