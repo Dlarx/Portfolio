@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { Send, Github, Linkedin, Facebook, CheckCircle2, AlertCircle } from "lucide-react";
 
 const SOCIAL = [
-  { icon: Github,   label: "GitHub",   href: "https://github.com/Dlarx" },
+  { icon: Github,   label: "GitHub",   href: "https://github.com/GeraldDiasanta" },
   { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/gerald-diasanta-bb375a319/" },
   { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/dlarxxu.istiguuu" },
 ];
