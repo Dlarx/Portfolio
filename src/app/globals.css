@@ -6,14 +6,16 @@
 
 /* ─── CSS Custom Properties ─── */
 :root {
-  --bg: #FAF5FF;
-  --surface: #FFFFFF;
-  --text: #1E1B4B;
-  --secondary: #6D28D9;
+  --bg: #EDE9F6;         
+  --surface: #F3F0FB;      
+  --text: #1E1B4B;        
+  --secondary: #5B21B6;  
   --accent: #7C3AED;
-  --grad-from: #A855F7;
-  --grad-to: #06B6D4;
-  --glow: rgba(124, 58, 237, 0.35);
+  --grad-from: #7C3AED;
+  --grad-to: #0891B2;
+  --glow: rgba(124, 58, 237, 0.25);
+  --node-bg-opacity: 0.18;
+  --node-border-opacity: 0.5;
 }
 
 .dark {
@@ -25,6 +27,8 @@
   --grad-from: #8B5CF6;
   --grad-to: #06B6D4;
   --glow: rgba(139, 92, 246, 0.4);
+  --node-bg-opacity: 0.18;
+  --node-border-opacity: 0.5;
 }
 
 /* ─── Base ─── */
@@ -40,12 +44,24 @@ html {
 }
 
 body {
-  background-color: var(--bg);
+  background:
+    radial-gradient(ellipse at 20% 20%, #DDD6FE44 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, #BAE6FD44 0%, transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   font-family: 'Inter', sans-serif;
   font-feature-settings: "cv11", "ss01";
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
+}
+
+.dark body {
+  background:
+    radial-gradient(ellipse at 20% 20%, #4C1D9533 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, #0E749133 0%, transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
 }
 
 /* ─── Font assignments ─── */
@@ -75,15 +91,26 @@ body {
 
 /* ─── Glassmorphism ─── */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.18);
+  box-shadow: 0 2px 16px rgba(124, 58, 237, 0.06);
 }
 
+/* Dark mode: deep tinted glass */
 .dark .glass {
   background: rgba(21, 26, 45, 0.7);
   border: 1px solid rgba(139, 92, 246, 0.15);
+  box-shadow: none;
+}
+
+/* ─── Surface cards — visible in light mode ─── */
+:root {
+  --surface-shadow: 0 2px 20px rgba(124, 58, 237, 0.08), 0 1px 4px rgba(0,0,0,0.06);
+}
+.dark {
+  --surface-shadow: none;
 }
 
 /* ─── Gradient Text ─── */
@@ -109,10 +136,16 @@ body {
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0;
+  opacity: 0.3;           /* always slightly visible in light mode */
   transition: opacity 0.3s ease;
 }
 .gradient-border:hover::before {
+  opacity: 1;
+}
+.dark .gradient-border::before {
+  opacity: 0;
+}
+.dark .gradient-border:hover::before {
   opacity: 1;
 }
 
@@ -123,24 +156,30 @@ body {
 
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow); }
-  50% { box-shadow: 0 0 40px var(--glow), 0 0 80px var(--glow); }
+  50%       { box-shadow: 0 0 40px var(--glow), 0 0 80px var(--glow); }
 }
 
 /* ─── Neural line animation ─── */
 @keyframes dashFlow {
   to { stroke-dashoffset: -100; }
 }
-
 .neural-line {
   stroke-dasharray: 8 4;
   animation: dashFlow 3s linear infinite;
+}
+
+/* ─── Node labels — force dark bg in light mode so all colors are readable ─── */
+:root:not(.dark) .node-label {
+  background: rgba(255, 255, 255, 0.80) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14) !important;
+  text-shadow: none !important;
+  filter: saturate(1.4) brightness(0.70);
 }
 
 /* ─── Section utility ─── */
 .section-pad {
   padding: 6rem 1.5rem;
 }
-
 @media (min-width: 768px) {
   .section-pad {
     padding: 8rem 2rem;

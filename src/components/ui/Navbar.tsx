@@ -26,7 +26,6 @@ export default function Navbar() {
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
       const sections = NAV_LINKS.map((l) => l.href.replace("#", ""));
       for (const id of [...sections].reverse()) {
         const el = document.getElementById(id);
@@ -57,17 +56,17 @@ export default function Navbar() {
           scrolled ? "glass shadow-lg shadow-black/10" : "bg-transparent"
         }`}
       >
-        <nav className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        <nav className="w-full px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-2">
           {/* Logo */}
           <button
             onClick={() => scrollTo("#hero")}
-            className="font-display font-800 text-xl gradient-text"
+            className="font-display font-800 text-lg md:text-xl gradient-text flex-shrink-0"
           >
             &lt;Dlarx /&gt;
           </button>
 
           {/* Desktop Links */}
-          <ul className="hidden md:flex items-center gap-1">
+          <ul className="hidden md:flex items-center gap-1 flex-1 justify-center">
             {NAV_LINKS.map((link) => {
               const id = link.href.replace("#", "");
               const isActive = active === id;
@@ -99,8 +98,8 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Right Controls */}
-          <div className="flex items-center gap-3">
+          {/* Right Controls — always visible, flex-shrink-0 prevents squishing */}
+          <div className="flex items-center gap-2 flex-shrink-0">
             {mounted && (
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -130,7 +129,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-20 z-40 glass border-b border-white/10 md:hidden"
+            className="fixed inset-x-0 top-16 z-40 glass border-b border-white/10 md:hidden"
           >
             <ul className="flex flex-col p-4 gap-1">
               {NAV_LINKS.map((link) => (
